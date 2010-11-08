@@ -46,6 +46,56 @@
 			<key>help</key>
 			<string>Directory where component will save data file - Initial value is set to session global</string>
 		</dict>
+		<dict>
+			<key>optionIdentifier</key>
+			<string>RRFARSQuestionAccessMethod</string>
+			<key>displayName</key>
+			<string>Question Access Method</string>
+			<key>type</key>
+			<integer>4</integer>
+                        <key>enumeratedList</key>
+                        <array></array>
+                        <key>allowsNull</key>
+                        <false/>
+                        <key>allowsEdit</key>
+                        <true/>
+		</dict>
+		<dict>
+			<key>optionIdentifier</key>
+			<string>RRFARSAdjectiveFile</string>
+			<key>displayName</key>
+			<string>Adjective File</string>
+			<key>type</key>
+			<integer>3</integer>
+			<key>default</key>
+			<string></string>
+			<key>isDirectory</key>
+			<false/>
+			<key>allowsEdit</key>
+			<true/>
+			<key>allowsNull</key>
+			<false/>
+			<key>help</key>
+			<string>File containing (ordered) adjectives</string>
+		</dict>
+		<dict>
+			<key>optionIdentifier</key>
+			<string>RRFARSQuestionFile</string>
+			<key>displayName</key>
+			<string>Question File</string>
+			<key>type</key>
+			<integer>3</integer>
+			<key>default</key>
+			<string></string>
+			<key>isDirectory</key>
+			<false/>
+			<key>allowsEdit</key>
+			<true/>
+			<key>allowsNull</key>
+			<false/>
+			<key>help</key>
+			<string>File containing (ordered) questions</string>
+		</dict>
 	</array>
 </dict>
 </plist>
