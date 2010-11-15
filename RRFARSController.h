@@ -147,6 +147,14 @@
 //////////////////////////////////////////////////////////////////////////////
 extern NSString * const RRFARSTaskNameKey;
 extern NSString * const RRFARSDataDirectoryKey;
+extern NSString * const RRFARSQuestionFileKey;
+extern NSString * const RRFARSQuestionAccessMethodKey;
+extern NSString * const RRFARSRatingsStartAtZeroKey;
+extern NSString * const RRFARSAdjective1Key;
+extern NSString * const RRFARSAdjective2Key;
+extern NSString * const RRFARSAdjective3Key;
+extern NSString * const RRFARSAdjective4Key;
+extern NSString * const RRFARSAdjective5Key;
 
 
 

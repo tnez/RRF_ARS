@@ -174,6 +174,14 @@
 // ex: NSString * const RRFARSNameOfPreferenceKey = @"RRFARSNameOfPreference"
 NSString * const RRFARSTaskNameKey = @"RRFARSTaskName";
 NSString * const RRFARSDataDirectoryKey = @"RRFARSDataDirectory";
+NSString * const RRFARSQuestionFileKey = @"RRFARSQuestionFile";
+NSString * const RRFARSQuestionAccessMethodKey = @"RRFARSQuestionAccessMethod";
+NSString * const RRFARSRatingsStartAtZeroKey = @"RRFARSRatingsStartAtZero";
+NSString * const RRFARSAdjective1Key = @"RRFARSAdjective1";
+NSString * const RRFARSAdjective2Key = @"RRFARSAdjective2";
+NSString * const RRFARSAdjective3Key = @"RRFARSAdjective3";
+NSString * const RRFARSAdjective4Key = @"RRFARSAdjective4";
+NSString * const RRFARSAdjective5Key = @"RRFARSAdjective5";
 
 
 
