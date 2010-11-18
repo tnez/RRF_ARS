@@ -9,8 +9,29 @@
 /////////////////////////////////////////////////////////////
 #import "RRFARSController.h"
 
+
+// definitions to manage keys
+/////////////////////////////
+#define QUESTION_FILE [[definition valueForKey:RRFARSQuestionFileKey] stringByStandardizingPath]
+#define QUESTION_ACCESS_MODE [[definition valueForKey:RRFARSQuestionAccessMethodKey] unsignedIntegerValue]
+#define RATINGS_SHOULD_START_AT_ZERO [[definition valueForKey:RRFARSRatingsStartAtZeroKey] boolValue]
+#define ADJECTIVE_0 [definition valueForKey:RRFARSAdjective0Key]
+#define ADJECTIVE_1 [definition valueForKey:RRFARSAdjective1Key]
+#define ADJECTIVE_2 [definition valueForKey:RRFARSAdjective2Key]
+#define ADJECTIVE_3 [definition valueForKey:RRFARSAdjective3Key]
+#define ADJECTIVE_4 [definition valueForKey:RRFARSAdjective4Key]
+
+// helper definitions
+/////////////////////
+#define TKLogError(fmt, ...) [self registerError:[NSString stringWithFormat:fmt, ##__VA_ARGS__]]
+#define TKLogToTemp(fmt, ...) [delegate logStringToDefaultTempFile:[NSString stringWithFormat:fmt, ##__VA_ARGS__]]
+#define CURRENT_QUESTION_IS_INVERTED NO
+
+
 @implementation RRFARSController
-@synthesize delegate,definition,errorLog,view; // add any member that has a property
+// add any member that has a property
+@synthesize delegate,definition,errorLog,view,currentQuestion,selectionIdx,radioButtons;
+
 
 #pragma mark HOUSEKEEPING METHODS
 /**
@@ -20,7 +41,8 @@
     [errorLog release];
     // any additional release calls go here
     // ------------------------------------
-    
+    [questions release];
+    [currentQuestion release];
     [super dealloc];
 }
 
@@ -30,7 +52,8 @@
  Start the component - will receive this message from the component controller
  */
 - (void)begin {
-    
+  // load the next question
+  [self nextQuestion];
 }
 
 /**
@@ -51,7 +74,8 @@
  Perform any and all error checking required by the component - return YES if passed
  */
 - (BOOL)isClearedToBegin {
-    return YES; // this is the default; change as needed
+  // we are cleared to begin if the error log is empty
+  return ((errorLog == nil) || [errorLog isEqualToString:@""]);
 }
 
 /**
@@ -94,15 +118,43 @@
     
     // --- WHAT NEEDS TO BE INITIALIZED BEFORE THIS COMPONENT CAN OPERATE? ---
     ///////////////////////////////////////////////////////////////////////////
+    //// ADJECTIVES:
+    // create the adjective list
+    adjectives = [[NSArray alloc] initWithObjects:
+                                        ADJECTIVE_0,
+                                        ADJECTIVE_1,
+                                        ADJECTIVE_2,
+                                        ADJECTIVE_3,
+                                        ADJECTIVE_4, nil];
+
+    // if there are any blank adjectives...
+    if([adjectives count]!=5) {
+      TKLogError(@"Invalid adjectives exist");
+    }
+    // set selection idx to our gaurd value
+    selectionIdx = -1;
+
+    ///// QUESTIONS:
+    // read the question file
+    questions = [[TKQuestionSet alloc] initFromFile:QUESTION_FILE usingAccessMethod:QUESTION_ACCESS_MODE];
+    // log error if there was a problem loading the questions
+    if(!questions) {
+      // log the issue
+      TKLogError(@"Could not load questions from: %@",QUESTION_FILE);
+    }
+    // check that we aren't trying to use random w/ replacement because we do not
+    // yet support this
+    if([questions accessMethod] == TKQuestionSetRandomWithRepeat) {
+      TKLogError(@"We do not yet support Random Selection With Replacement");
+    }
     
-    // LOAD NIB
-    ///////////
+    //// NIB:
     if([NSBundle loadNibNamed:RRFARSMainNibNameKey owner:self]) {
         // SETUP THE INTERFACE VALUES
         /////////////////////////////
-        
+        // for this particular bundle - everything will be done w/ bindings
     } else { // NIB DID NOT LOAD
-        [self registerError:@"Could not load Nib file"];
+      TKLogError(@"Could not load NIB file");
     }
 }
 
@@ -119,6 +171,7 @@
 - (void)tearDown {
     // any finalization should be done here:
     // - remove any temporary data files
+    [[NSFileManager defaultManager] removeItemAtPath:[delegate defaultTempFile] error:nil];
 }
 
 /**
@@ -166,8 +219,76 @@
     // append the new error to the error log
     [self setErrorLog:[[errorLog stringByAppendingString:theError] stringByAppendingString:@"\n"]];
 }
+/** 
+    Present the next question to the subject
+*/
+- (void)nextQuestion {
+  // if there is another question left to ask
+  if(![questions isEmpty]) {
+    // reset the selection
+    [radioButtons deselectAllCells];
+    selectionIdx = -1;
+    // get the next question from the question set
+    [self setCurrentQuestion:[questions nextQuestion]];
+    // reset latency timer
+    questionStartTime = current_time_marker();
+  } else { // no more questions
+    // we're done
+    [delegate componentDidFinish:self];
+  }
+}
 
-        
+/**
+   Log the response of the subject
+*/
+- (void)logSubjectResponse: (NSInteger)response {
+  // get the latency value
+  TKTime latency = time_since(questionStartTime);
+  if(CURRENT_QUESTION_IS_INVERTED) {
+    // take the top less the response
+    response = 4 - response;
+  }
+  // offset the value if scale does not start at zero
+  if(!RATINGS_SHOULD_START_AT_ZERO) {
+    // offset by 1 (only mode until further notice)
+    response+=1;
+  }
+  // log the data
+  TKLogToTemp(@"%@\t%d\t%d\t%@",
+              [currentQuestion uid],                            // question id
+              response,                                         // response
+              latency.seconds*1000 + latency.microseconds/1000, // latency
+              [currentQuestion text]);                          // question text              
+}
+
+/**
+   Handle the subject response
+*/
+- (IBAction)subjectDidRespond: (id)sender {
+  // if the subject has made a selection...
+  if(selectionIdx >= 0) {
+    NSLog(@"Response: %d",selectionIdx);
+    // log the response
+    [self logSubjectResponse:selectionIdx];
+    // go to the next question
+    [self nextQuestion];
+  }
+  // else no selection was made -- do nothing
+}
+
+/**
+   Return the adjective represented by the index
+*/
+- (NSString *)adjective: (NSUInteger)idx {
+  // make sure we have a valid idx
+  if(0 <= idx <= 4) {
+    // return the adjective
+    return [adjectives objectAtIndex:idx];
+  }
+  // otherwise return nil (invalid)
+  return nil;
+}
+
 
 #pragma mark Preference Keys
 // HERE YOU DEFINE KEY REFERENCES FOR ANY PREFERENCE VALUES
@@ -177,11 +298,11 @@ NSString * const RRFARSDataDirectoryKey = @"RRFARSDataDirectory";
 NSString * const RRFARSQuestionFileKey = @"RRFARSQuestionFile";
 NSString * const RRFARSQuestionAccessMethodKey = @"RRFARSQuestionAccessMethod";
 NSString * const RRFARSRatingsStartAtZeroKey = @"RRFARSRatingsStartAtZero";
+NSString * const RRFARSAdjective0Key = @"RRFARSAdjective0";
 NSString * const RRFARSAdjective1Key = @"RRFARSAdjective1";
 NSString * const RRFARSAdjective2Key = @"RRFARSAdjective2";
 NSString * const RRFARSAdjective3Key = @"RRFARSAdjective3";
 NSString * const RRFARSAdjective4Key = @"RRFARSAdjective4";
-NSString * const RRFARSAdjective5Key = @"RRFARSAdjective5";
 
 
 

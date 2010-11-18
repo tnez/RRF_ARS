@@ -75,7 +75,6 @@
 			<array>
 				<string>Sequential Access</string>
 				<string>Random Access Without Replacement</string>
-				<string>Random Access With Replacement</string>
 			</array>
 			<key>default</key>
                         <integer>0</integer>
@@ -101,6 +100,22 @@
 			<false/>
 			<key>help</key>
 			<string>If yes, rating scale starts at zero - If no, rating scale starts at 1</string>
+		</dict>
+		<dict>
+			<key>optionIdentifier</key>
+			<string>RRFARSAdjective0</string>
+			<key>displayName</key>
+			<string>Adjective 0</string>
+			<key>type</key>
+			<integer>0</integer>
+			<key>default</key>
+			<string></string>
+			<key>allowsEdit</key>
+			<true/>
+			<key>allowsNull</key>
+			<false/>
+			<key>help</key>
+			<string>Adjective 0</string>
 		</dict>
 		<dict>
 			<key>optionIdentifier</key>
@@ -165,22 +180,6 @@
 			<false/>
 			<key>help</key>
 			<string>Adjective 4</string>
-		</dict>
-		<dict>
-			<key>optionIdentifier</key>
-			<string>RRFARSAdjective5</string>
-			<key>displayName</key>
-			<string>Adjective 5</string>
-			<key>type</key>
-			<integer>0</integer>
-			<key>default</key>
-			<string></string>
-			<key>allowsEdit</key>
-			<true/>
-			<key>allowsNull</key>
-			<false/>
-			<key>help</key>
-			<string>Adjective 5</string>
 		</dict>
 	</array>
 </dict>
