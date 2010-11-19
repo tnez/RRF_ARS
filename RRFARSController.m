@@ -9,7 +9,6 @@
 /////////////////////////////////////////////////////////////
 #import "RRFARSController.h"
 
-
 // definitions to manage keys
 /////////////////////////////
 #define QUESTION_FILE [[definition valueForKey:RRFARSQuestionFileKey] stringByStandardizingPath]
@@ -27,11 +26,11 @@
 #define TKLogToTemp(fmt, ...) [delegate logStringToDefaultTempFile:[NSString stringWithFormat:fmt, ##__VA_ARGS__]]
 #define CURRENT_QUESTION_IS_INVERTED NO
 
-
 @implementation RRFARSController
-// add any member that has a property
-@synthesize delegate,definition,errorLog,view,currentQuestion,selectionIdx,radioButtons;
 
+// add any member that has a property
+@synthesize delegate,definition,errorLog,view,currentQuestion,selectionIdx,
+            radioButtons;
 
 #pragma mark HOUSEKEEPING METHODS
 /**
@@ -60,7 +59,8 @@
  Return a string representation of the data directory
  */
 - (NSString *)dataDirectory {
-    return [[definition valueForKey:RRFARSDataDirectoryKey] stringByStandardizingPath];
+    return [[definition valueForKey:RRFARSDataDirectoryKey]
+            stringByStandardizingPath];
 }
 
 /**
@@ -71,7 +71,8 @@
 }
 
 /**
- Perform any and all error checking required by the component - return YES if passed
+ Perform any and all error checking required by the component - return YES if
+ passed
  */
 - (BOOL)isClearedToBegin {
   // we are cleared to begin if the error log is empty
@@ -79,14 +80,16 @@
 }
 
 /**
- Returns the file name containing the raw data that will be appended to the data file
+ Returns the file name containing the raw data that will be appended to the data
+ file
  */
 - (NSString *)rawDataFile {
     return [delegate defaultTempFile]; // this is the default implementation
 }
 
 /**
- Perform actions required to recover from crash using the given raw data passed as string
+ Perform actions required to recover from crash using the given raw data passed
+ as string
  */
 - (void)recover {
     // if no recovery is needed, nothing need be done here
@@ -100,7 +103,8 @@
 }
 
 /**
- Accept assignment for the component delegate - The component controller will assign itself as the delegate
+ Accept assignment for the component delegate - The component controller will
+ assign itself as the delegate
  Note: The new delegate must adopt the TKComponentBundleDelegate protocol
  */
 - (void)setDelegate: (id <TKComponentBundleDelegate> )aDelegate {
@@ -108,7 +112,8 @@
 }
 
 /**
- Perform any and all initialization required by component - load any nib files and perform all required initialization
+ Perform any and all initialization required by component - load any nib files
+ and perform all required initialization
  */
 - (void)setup {
 
@@ -136,14 +141,16 @@
 
     ///// QUESTIONS:
     // read the question file
-    questions = [[TKQuestionSet alloc] initFromFile:QUESTION_FILE usingAccessMethod:QUESTION_ACCESS_MODE];
+    questions = [[TKQuestionSet alloc]
+                 initFromFile:QUESTION_FILE
+                 usingAccessMethod:QUESTION_ACCESS_MODE];
     // log error if there was a problem loading the questions
     if(!questions) {
       // log the issue
       TKLogError(@"Could not load questions from: %@",QUESTION_FILE);
     }
-    // check that we aren't trying to use random w/ replacement because we do not
-    // yet support this
+    // check that we aren't trying to use random w/ replacement because we do
+    // not yet support this
     if([questions accessMethod] == TKQuestionSetRandomWithRepeat) {
       TKLogError(@"We do not yet support Random Selection With Replacement");
     }
@@ -171,7 +178,8 @@
 - (void)tearDown {
     // any finalization should be done here:
     // - remove any temporary data files
-    [[NSFileManager defaultManager] removeItemAtPath:[delegate defaultTempFile] error:nil];
+    [[NSFileManager defaultManager] removeItemAtPath:
+     [delegate defaultTempFile] error:nil];
 }
 
 /**
@@ -208,16 +216,13 @@
 //- (NSString *)summary {
 //
 //}
-
-        
-        
-
         
 #pragma mark ADDITIONAL METHODS
 /** Add additional methods required for operation */
 - (void)registerError: (NSString *)theError {
     // append the new error to the error log
-    [self setErrorLog:[[errorLog stringByAppendingString:theError] stringByAppendingString:@"\n"]];
+    [self setErrorLog:[[errorLog stringByAppendingString:theError]
+                       stringByAppendingString:@"\n"]];
 }
 /** 
     Present the next question to the subject
@@ -289,7 +294,6 @@
   return nil;
 }
 
-
 #pragma mark Preference Keys
 // HERE YOU DEFINE KEY REFERENCES FOR ANY PREFERENCE VALUES
 // ex: NSString * const RRFARSNameOfPreferenceKey = @"RRFARSNameOfPreference"
@@ -304,14 +308,9 @@ NSString * const RRFARSAdjective2Key = @"RRFARSAdjective2";
 NSString * const RRFARSAdjective3Key = @"RRFARSAdjective3";
 NSString * const RRFARSAdjective4Key = @"RRFARSAdjective4";
 
-
-
-
 #pragma mark Internal Strings
 // HERE YOU DEFINE KEYS FOR CONSTANT STRINGS //
 ///////////////////////////////////////////////
 NSString * const RRFARSMainNibNameKey = @"RRFARSMainNib";
-        
-       
         
 @end

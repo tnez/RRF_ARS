@@ -42,7 +42,6 @@
 @property (assign)            IBOutlet NSMatrix               *radioButtons;
 @property (assign)            NSInteger                       selectionIdx;
 
-
 #pragma mark REQUIRED PROTOCOL METHODS
 
 /**
@@ -61,17 +60,20 @@
 - (NSString *)errorLog;
 
 /**
-   Perform any and all error checking required by the component - return YES if passed
+   Perform any and all error checking required by the component - return YES if
+   passed
 */
 - (BOOL)isClearedToBegin;
 
 /**
-   Returns the file name containing the raw data that will be appended to the data file
+   Returns the file name containing the raw data that will be appended to the
+   data file
 */
 - (NSString *)rawDataFile;
 
 /**
-   Perform actions required to recover from crash using the given raw data passed as string
+   Perform actions required to recover from crash using the given raw data
+   passed as string
 */
 - (void)recover;
 
@@ -81,13 +83,15 @@
 - (void)setDefinition: (NSDictionary *)aDictionary;
 
 /**
-   Accept assignment for the component delegate - The component controller will assign itself as the delegate
+   Accept assignment for the component delegate - The component controller will
+   assign itself as the delegate
    Note: The new delegate must adopt the TKComponentBundleDelegate protocol
 */
 - (void)setDelegate: (id <TKComponentBundleDelegate> )aDelegate;
 
 /**
-   Perform any and all initialization required by component - load any nib files and perform all required initialization
+   Perform any and all initialization required by component - load any nib files
+   and perform all required initialization
 */
 - (void)setup;
 
@@ -111,9 +115,6 @@
 */
 - (NSView *)mainView;
 
-
-
-
 #pragma mark OPTIONAL PROTOCOL METHODS
 // UNCOMMENT ANY OF THE FOLLOWING METHODS IF THEIR BEHAVIOR IS DESIRED //
 /////////////////////////////////////////////////////////////////////////
@@ -132,9 +133,6 @@
    Summary data if desired
 */
 //- (NSString *)summary;
-
-
-
 
 #pragma mark ADDITIONAL METHODS
 // PLACE ANY NON-PROTOCOL METHODS HERE
@@ -165,7 +163,6 @@
 */
 - (NSString *)adjective: (NSUInteger)idx;
 
-
 #pragma mark Preference Keys
 // HERE YOU DEFINE KEY REFERENCES FOR ANY PREFERENCE VALUES
 // ex: extern NSString * const RRFARSNameOfPreferenceKey;
@@ -181,17 +178,10 @@ extern NSString * const RRFARSAdjective2Key;
 extern NSString * const RRFARSAdjective3Key;
 extern NSString * const RRFARSAdjective4Key;
 
-
-
-
-
 #pragma mark Internal Strings
 // HERE YOU DEFINE KEYS FOR CONSTANT STRINGS
 ////////////////////////////////////////////
 extern NSString * const RRFARSMainNibNameKey;
-
-
-
 
 #pragma mark Enumerated Values
 // HERE YOU CAN DEFINE ENUMERATED VALUES
