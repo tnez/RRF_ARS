@@ -178,8 +178,11 @@
 - (void)tearDown {
     // any finalization should be done here:
     // - remove any temporary data files
+    // ......
+    // - remove the default temp file
     [[NSFileManager defaultManager] removeItemAtPath:
-     [delegate defaultTempFile] error:nil];
+     [[delegate tempDirectory] stringByAppendingPathComponent:
+      [delegate defaultTempFile]] error:nil];
 }
 
 /**
