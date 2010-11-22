@@ -132,7 +132,7 @@
 /**
    Summary data if desired
 */
-//- (NSString *)summary;
+- (NSString *)summary;
 
 #pragma mark ADDITIONAL METHODS
 // PLACE ANY NON-PROTOCOL METHODS HERE

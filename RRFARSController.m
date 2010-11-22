@@ -216,9 +216,10 @@
 /**
  Summary data if desired
  */
-//- (NSString *)summary {
-//
-//}
+- (NSString *)summary {
+    // provide simple headers for data
+    return @"Q_ID:\tRESP:\tTIME:\tQ_TEXT:\n----\t----\t----\t------\n";
+}
         
 #pragma mark ADDITIONAL METHODS
 /** Add additional methods required for operation */
