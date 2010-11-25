@@ -24,7 +24,7 @@
 /////////////////////
 #define TKLogError(fmt, ...) [self registerError:[NSString stringWithFormat:fmt, ##__VA_ARGS__]]
 #define TKLogToTemp(fmt, ...) [delegate logStringToDefaultTempFile:[NSString stringWithFormat:fmt, ##__VA_ARGS__]]
-#define CURRENT_QUESTION_IS_INVERTED NO
+#define CURRENT_QUESTION_IS_INVERTED [[[currentQuestion additionalFields] objectAtIndex:0] isEqualToString:@"-1"]
 
 @implementation RRFARSController
 
@@ -237,6 +237,8 @@
     [self setCurrentQuestion:[questions nextQuestion]];
     // reset latency timer
     questionStartTime = current_time_marker();
+    NSLog(@"Question Started: %d.%d",questionStartTime.seconds,
+          questionStartTime.microseconds);
   } else { // no more questions
     // we're done
     [delegate componentDidFinish:self];
@@ -248,7 +250,11 @@
 */
 - (void)logSubjectResponse: (NSInteger)response {
   // get the latency value
+  TKTime now = current_time_marker();
+  NSLog(@"Question Ended: %d.%d", now.seconds, now.microseconds);
   TKTime latency = time_since(questionStartTime);
+  NSLog(@"Latency Reported: %d.%d",latency.seconds,latency.microseconds);
+  // if the current question is inverted...
   if(CURRENT_QUESTION_IS_INVERTED) {
     // take the top less the response
     response = 4 - response;
@@ -262,8 +268,8 @@
   TKLogToTemp(@"%@\t%d\t%d\t%@",
               [currentQuestion uid],                            // question id
               response,                                         // response
-              latency.seconds*1000 + latency.microseconds/1000, // latency
-              [currentQuestion text]);                          // question text              
+              time_as_milliseconds(latency),                    // latency
+              [currentQuestion text]);                          // question text
 }
 
 /**

@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.03">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">9L30</string>
+		<string key="IBDocument.SystemVersion">9L31a</string>
 		<string key="IBDocument.InterfaceBuilderVersion">680</string>
 		<string key="IBDocument.AppKitVersion">949.54</string>
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
@@ -88,7 +88,7 @@
 						<object class="NSMutableArray" key="NSCells">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSButtonCell" id="36604007">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">67763712</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">Radio</string>
 								<object class="NSFont" key="NSSupport" id="512444356">
@@ -109,7 +109,7 @@
 								<int key="NSPeriodicInterval">25</int>
 							</object>
 							<object class="NSButtonCell" id="595328806">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">67763712</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">Radio</string>
 								<reference key="NSSupport" ref="512444356"/>
@@ -219,7 +219,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMTAAA</bytes>
 								<int key="NSPeriodicInterval">75</int>
 							</object>
 							<object class="NSButtonCell" id="460405608">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">67763712</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">Radio</string>
 								<reference key="NSSupport" ref="512444356"/>
@@ -232,7 +232,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMTAAA</bytes>
 								<int key="NSPeriodicInterval">75</int>
 							</object>
 							<object class="NSButtonCell" id="785047222">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">67763712</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">Radio</string>
 								<reference key="NSSupport" ref="512444356"/>
@@ -245,7 +245,7 @@ AAAAAAAAdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUsIEluYy4sIDIwMTAAA</bytes>
 								<int key="NSPeriodicInterval">75</int>
 							</object>
 							<object class="NSButtonCell" id="779850309">
-								<int key="NSCellFlags">67239424</int>
+								<int key="NSCellFlags">67763712</int>
 								<int key="NSCellFlags2">134217728</int>
 								<string key="NSContents">Radio</string>
 								<reference key="NSSupport" ref="512444356"/>
@@ -318,8 +318,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
 						</object>
-						<int key="NSSelectedRow">-1</int>
-						<int key="NSSelectedCol">-1</int>
+						<reference key="NSSelectedCell" ref="36604007"/>
 						<reference key="NSBackgroundColor" ref="111262929"/>
 						<object class="NSColor" key="NSCellBackgroundColor">
 							<int key="NSColorSpace">3</int>
@@ -342,7 +341,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<int key="NSButtonFlags">-2038284033</int>
 							<int key="NSButtonFlags2">129</int>
 							<string key="NSAlternateContents"/>
-							<string type="base64-UTF8" key="NSKeyEquivalent">DQ</string>
+							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">200</int>
 							<int key="NSPeriodicInterval">25</int>
 						</object>
@@ -569,7 +568,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilderKit</string>
 					<string>com.apple.InterfaceBuilderKit</string>
-					<string>{{134, 576}, {764, 580}}</string>
+					<string>{{134, 176}, {764, 580}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSArray">
 						<bool key="EncodedWithXMLCoder">YES</bool>
