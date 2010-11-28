@@ -178,8 +178,11 @@
 - (void)tearDown {
     // any finalization should be done here:
     // - remove any temporary data files
+    // ......
+    // - remove the default temp file
     [[NSFileManager defaultManager] removeItemAtPath:
-     [delegate defaultTempFile] error:nil];
+     [[delegate tempDirectory] stringByAppendingPathComponent:
+      [delegate defaultTempFile]] error:nil];
 }
 
 /**
@@ -213,9 +216,10 @@
 /**
  Summary data if desired
  */
-//- (NSString *)summary {
-//
-//}
+- (NSString *)summary {
+    // provide simple headers for data
+    return @"Q_ID:\tRESP:\tTIME:\tQ_TEXT:\n----\t----\t----\t------\n";
+}
         
 #pragma mark ADDITIONAL METHODS
 /** Add additional methods required for operation */
