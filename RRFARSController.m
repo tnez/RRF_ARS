@@ -235,8 +235,7 @@
   // if there is another question left to ask
   if(![questions isEmpty]) {
     // reset the selection
-    [radioButtons deselectAllCells];
-    selectionIdx = -1;
+    [self setSelectionIdx:-1];
     // get the next question from the question set
     [self setCurrentQuestion:[questions nextQuestion]];
     // reset latency timer
