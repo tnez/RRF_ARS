@@ -252,8 +252,10 @@
    Log the response of the subject
 */
 - (void)logSubjectResponse: (NSInteger)response {
+#ifdef DEBUG
   // get the latency value
   TKTime now = current_time_marker();
+#endif
   DLog(@"Question Ended: %d.%d", now.seconds, now.microseconds);
   TKTime latency = time_since(questionStartTime);
   DLog(@"Latency Reported: %d.%d",latency.seconds,latency.microseconds);
