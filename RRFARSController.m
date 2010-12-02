@@ -30,202 +30,202 @@
 
 // add any member that has a property
 @synthesize delegate,definition,errorLog,view,currentQuestion,selectionIdx,
-            radioButtons;
+  radioButtons;
 
 #pragma mark HOUSEKEEPING METHODS
 /**
- Give back any memory that may have been allocated by this bundle
- */
+   Give back any memory that may have been allocated by this bundle
+*/
 - (void)dealloc {
-    [errorLog release];
-    // any additional release calls go here
-    // ------------------------------------
-    [questions release];
-    [currentQuestion release];
-    [super dealloc];
+  [errorLog release];
+  // any additional release calls go here
+  // ------------------------------------
+  [questions release];
+  [currentQuestion release];
+  [super dealloc];
 }
 
 #pragma mark REQUIRED PROTOCOL METHODS
 
 /**
- Start the component - will receive this message from the component controller
- */
+   Start the component - will receive this message from the component controller
+*/
 - (void)begin {
   // load the next question
   [self nextQuestion];
 }
 
 /**
- Return a string representation of the data directory
- */
+   Return a string representation of the data directory
+*/
 - (NSString *)dataDirectory {
-    return [[definition valueForKey:RRFARSDataDirectoryKey]
-            stringByStandardizingPath];
+  return [[definition valueForKey:RRFARSDataDirectoryKey]
+           stringByStandardizingPath];
 }
 
 /**
- Return a string object representing all current errors in log form
- */
+   Return a string object representing all current errors in log form
+*/
 - (NSString *)errorLog {
-    return errorLog;
+  return errorLog;
 }
 
 /**
- Perform any and all error checking required by the component - return YES if
- passed
- */
+   Perform any and all error checking required by the component - return YES if
+   passed
+*/
 - (BOOL)isClearedToBegin {
   // we are cleared to begin if the error log is empty
   return ((errorLog == nil) || [errorLog isEqualToString:@""]);
 }
 
 /**
- Returns the file name containing the raw data that will be appended to the data
- file
- */
+   Returns the file name containing the raw data that will be appended to the data
+   file
+*/
 - (NSString *)rawDataFile {
-    return [delegate defaultTempFile]; // this is the default implementation
+  return [delegate defaultTempFile]; // this is the default implementation
 }
 
 /**
- Perform actions required to recover from crash using the given raw data passed
- as string
- */
+   Perform actions required to recover from crash using the given raw data passed
+   as string
+*/
 - (void)recover {
-    // if no recovery is needed, nothing need be done here
+  // if no recovery is needed, nothing need be done here
 }
 
 /**
- Accept assignment for the component definition
- */
+   Accept assignment for the component definition
+*/
 - (void)setDefinition: (NSDictionary *)aDictionary {
-    definition = aDictionary;
+  definition = aDictionary;
 }
 
 /**
- Accept assignment for the component delegate - The component controller will
- assign itself as the delegate
- Note: The new delegate must adopt the TKComponentBundleDelegate protocol
- */
+   Accept assignment for the component delegate - The component controller will
+   assign itself as the delegate
+   Note: The new delegate must adopt the TKComponentBundleDelegate protocol
+*/
 - (void)setDelegate: (id <TKComponentBundleDelegate> )aDelegate {
-    delegate = aDelegate;
+  delegate = aDelegate;
 }
 
 /**
- Perform any and all initialization required by component - load any nib files
- and perform all required initialization
- */
+   Perform any and all initialization required by component - load any nib files
+   and perform all required initialization
+*/
 - (void)setup {
 
-    // CLEAR ERROR LOG
-    //////////////////
-    [self setErrorLog:@""];
+  // CLEAR ERROR LOG
+  //////////////////
+  [self setErrorLog:@""];
     
-    // --- WHAT NEEDS TO BE INITIALIZED BEFORE THIS COMPONENT CAN OPERATE? ---
-    ///////////////////////////////////////////////////////////////////////////
-    //// ADJECTIVES:
-    // create the adjective list
-    adjectives = [[NSArray alloc] initWithObjects:
-                                        ADJECTIVE_0,
-                                        ADJECTIVE_1,
-                                        ADJECTIVE_2,
-                                        ADJECTIVE_3,
-                                        ADJECTIVE_4, nil];
+  // --- WHAT NEEDS TO BE INITIALIZED BEFORE THIS COMPONENT CAN OPERATE? ---
+  ///////////////////////////////////////////////////////////////////////////
+  //// ADJECTIVES:
+  // create the adjective list
+  adjectives = [[NSArray alloc] initWithObjects:
+                                  ADJECTIVE_0,
+                                ADJECTIVE_1,
+                                ADJECTIVE_2,
+                                ADJECTIVE_3,
+                                ADJECTIVE_4, nil];
 
-    // if there are any blank adjectives...
-    if([adjectives count]!=5) {
-      TKLogError(@"Invalid adjectives exist");
-    }
-    // set selection idx to our gaurd value
-    selectionIdx = -1;
+  // if there are any blank adjectives...
+  if([adjectives count]!=5) {
+    TKLogError(@"Invalid adjectives exist");
+  }
+  // set selection idx to our gaurd value
+  selectionIdx = -1;
 
-    ///// QUESTIONS:
-    // read the question file
-    questions = [[TKQuestionSet alloc]
+  ///// QUESTIONS:
+  // read the question file
+  questions = [[TKQuestionSet alloc]
                  initFromFile:QUESTION_FILE
-                 usingAccessMethod:QUESTION_ACCESS_MODE];
-    // log error if there was a problem loading the questions
-    if(!questions) {
-      // log the issue
-      TKLogError(@"Could not load questions from: %@",QUESTION_FILE);
-    }
-    // check that we aren't trying to use random w/ replacement because we do
-    // not yet support this
-    if([questions accessMethod] == TKQuestionSetRandomWithRepeat) {
-      TKLogError(@"We do not yet support Random Selection With Replacement");
-    }
+                usingAccessMethod:QUESTION_ACCESS_MODE];
+  // log error if there was a problem loading the questions
+  if(!questions) {
+    // log the issue
+    TKLogError(@"Could not load questions from: %@",QUESTION_FILE);
+  }
+  // check that we aren't trying to use random w/ replacement because we do
+  // not yet support this
+  if([questions accessMethod] == TKQuestionSetRandomWithRepeat) {
+    TKLogError(@"We do not yet support Random Selection With Replacement");
+  }
     
-    //// NIB:
-    if([NSBundle loadNibNamed:RRFARSMainNibNameKey owner:self]) {
-        // SETUP THE INTERFACE VALUES
-        /////////////////////////////
-        // for this particular bundle - everything will be done w/ bindings
-    } else { // NIB DID NOT LOAD
-      TKLogError(@"Could not load NIB file");
-    }
+  //// NIB:
+  if([NSBundle loadNibNamed:RRFARSMainNibNameKey owner:self]) {
+    // SETUP THE INTERFACE VALUES
+    /////////////////////////////
+    // for this particular bundle - everything will be done w/ bindings
+  } else { // NIB DID NOT LOAD
+    TKLogError(@"Could not load NIB file");
+  }
 }
 
 /**
- Return YES if component should perform recovery actions
- */
+   Return YES if component should perform recovery actions
+*/
 - (BOOL)shouldRecover {
-    return NO;  // this is the default; change if needed
+  return NO;  // this is the default; change if needed
 }
 
 /**
- Perform any and all finalization required by component
- */
+   Perform any and all finalization required by component
+*/
 - (void)tearDown {
-    // any finalization should be done here:
-    // - remove any temporary data files
-    // ......
-    // - remove the default temp file
-    [[NSFileManager defaultManager] removeItemAtPath:
-     [[delegate tempDirectory] stringByAppendingPathComponent:
-      [delegate defaultTempFile]] error:nil];
+  // any finalization should be done here:
+  // - remove any temporary data files
+  // ......
+  // - remove the default temp file
+  [[NSFileManager defaultManager] removeItemAtPath:
+                                    [[delegate tempDirectory] stringByAppendingPathComponent:
+                                                           [delegate defaultTempFile]] error:nil];
 }
 
 /**
- Return the name of the current task
- */
+   Return the name of the current task
+*/
 - (NSString *)taskName {
-    return [definition valueForKey:RRFARSTaskNameKey];
+  return [definition valueForKey:RRFARSTaskNameKey];
 }
 
 /**
- Return the main view that should be presented to the subject
- */
+   Return the main view that should be presented to the subject
+*/
 - (NSView *)mainView {
-    return view;
+  return view;
 }
 
 #pragma mark OPTIONAL PROTOCOL METHODS
 /** Uncomment and implement the following methods if desired */
 /**
- Run header if something other than default is required
- */
+   Run header if something other than default is required
+*/
 //- (NSString *)runHeader {
 //
 //}
 /**
- Session header if something other than default is required
- */
+   Session header if something other than default is required
+*/
 //- (NSString *)sessionHeader {
 //
 //}
 /**
- Summary data if desired
- */
+   Summary data if desired
+*/
 - (NSString *)summary {
-    // provide simple headers for data
-    return @"Q_ID:\tRESP:\tTIME:\tQ_TEXT:\n----\t----\t----\t------\n";
+  // provide simple headers for data
+  return @"Q_ID:\tRESP:\tTIME:\tQ_TEXT:\n----\t----\t----\t------\n";
 }
         
 #pragma mark ADDITIONAL METHODS
 /** Add additional methods required for operation */
 - (void)registerError: (NSString *)theError {
-    // append the new error to the error log
-    [self setErrorLog:[[errorLog stringByAppendingString:theError]
+  // append the new error to the error log
+  [self setErrorLog:[[errorLog stringByAppendingString:theError]
                        stringByAppendingString:@"\n"]];
 }
 /** 
@@ -241,7 +241,7 @@
     // reset latency timer
     questionStartTime = current_time_marker();
     DLog(@"Question Started: %d.%d",questionStartTime.seconds,
-            questionStartTime.microseconds);
+         questionStartTime.microseconds);
   } else { // no more questions
     // we're done
     [delegate componentDidFinish:self];
