@@ -240,8 +240,8 @@
     [self setCurrentQuestion:[questions nextQuestion]];
     // reset latency timer
     questionStartTime = current_time_marker();
-    NSLog(@"Question Started: %d.%d",questionStartTime.seconds,
-          questionStartTime.microseconds);
+    DLog(@"Question Started: %d.%d",questionStartTime.seconds,
+            questionStartTime.microseconds);
   } else { // no more questions
     // we're done
     [delegate componentDidFinish:self];
@@ -254,9 +254,9 @@
 - (void)logSubjectResponse: (NSInteger)response {
   // get the latency value
   TKTime now = current_time_marker();
-  NSLog(@"Question Ended: %d.%d", now.seconds, now.microseconds);
+  DLog(@"Question Ended: %d.%d", now.seconds, now.microseconds);
   TKTime latency = time_since(questionStartTime);
-  NSLog(@"Latency Reported: %d.%d",latency.seconds,latency.microseconds);
+  DLog(@"Latency Reported: %d.%d",latency.seconds,latency.microseconds);
   // if the current question is inverted...
   if(CURRENT_QUESTION_IS_INVERTED) {
     // take the top less the response
@@ -281,7 +281,7 @@
 - (IBAction)subjectDidRespond: (id)sender {
   // if the subject has made a selection...
   if(selectionIdx >= 0) {
-    NSLog(@"Response: %d",selectionIdx);
+    DLog(@"Response: %d",selectionIdx);
     // log the response
     [self logSubjectResponse:selectionIdx];
     // go to the next question
