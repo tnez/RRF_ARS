@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.03">
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
-		<string key="IBDocument.SystemVersion">9L30</string>
+		<string key="IBDocument.SystemVersion">9L31a</string>
 		<string key="IBDocument.InterfaceBuilderVersion">680</string>
 		<string key="IBDocument.AppKitVersion">949.54</string>
 		<string key="IBDocument.HIToolboxVersion">353.00</string>
@@ -47,7 +47,7 @@
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="999327041">
-							<int key="NSCellFlags">71433728</int>
+							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">138674176</int>
 							<string key="NSContents">Multiline Label</string>
 							<object class="NSFont" key="NSSupport">
@@ -59,11 +59,11 @@
 							<bool key="NSDrawsBackground">YES</bool>
 							<object class="NSColor" key="NSBackgroundColor">
 								<int key="NSColorSpace">2</int>
-								<bytes key="NSRGB">MC4xMDk4MDM5MyAwLjI1NDkwMTk4IDAuNDQ3MDU4ODYAA</bytes>
+								<bytes key="NSRGB">MC44Nzg0MzE0NCAwLjg4NjI3NDU4IDAuODk4MDM5MjgAA</bytes>
 							</object>
 							<object class="NSColor" key="NSTextColor">
-								<int key="NSColorSpace">2</int>
-								<bytes key="NSRGB">MC45MzMzMzM0IDAuODkwMTk2MTQgMC44MTk2MDc5MQA</bytes>
+								<int key="NSColorSpace">1</int>
+								<bytes key="NSRGB">MCAwIDAAA</bytes>
 							</object>
 						</object>
 					</object>
@@ -586,7 +586,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilderKit</string>
 					<string>com.apple.InterfaceBuilderKit</string>
-					<string>{{111, 495}, {761, 478}}</string>
+					<string>{{111, 278}, {761, 478}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSArray">
 						<bool key="EncodedWithXMLCoder">YES</bool>
